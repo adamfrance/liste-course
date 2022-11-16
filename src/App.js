@@ -5,10 +5,12 @@ import Header from "./components/Header/Header";
 import styled, { createGlobalStyle } from "styled-components";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import Lists from "./pages/Lists";
+import FormUpdate from "./pages/FormUpdate";
 const ListDetail = lazy(() => import( /* webpackChunkName: "ListDetail" */ './pages/ListDetail'))
 const ListForm = lazy(() => import( /* webpackChunkName: "ListForm" */ './pages/ListForm'))
 // import ListDetail from "./pages/ListDetail";
 // import ListForm from "./pages/ListForm";
+
 
 
 
@@ -31,23 +33,27 @@ const AppWrapper = styled.div `
 
 function App() {
     return (
-        <React.Fragment>
-        <GlobalStyle /> 
+      <React.Fragment>
+        <GlobalStyle />
         <AppWrapper>
-        <Header />
-        <AppContext>
-        <Router >
-        <Suspense fallback={ <div> En cours de chargement... </div> } >
-        <Routes>
-            <Route path="/" element={<Lists />} />
-            <Route path='/list/:listId' element={<ListDetail />} />
-            <Route path='/list/:listId/new' element={<ListForm />} />
-          </Routes>
-          </Suspense>
-          </Router>
+          <Header />
+          <AppContext>
+            <Router>
+              <Suspense fallback={<div> En cours de chargement... </div>}>
+                <Routes>
+                  <Route path="/" element={<Lists />} />
+                  <Route path="/list/:listId" element={<ListDetail />} />
+                  <Route path="/list/:listId/new" element={<ListForm />} />
+                  <Route
+                    path="/list/:listId/update/:id/:title/:quantity/:price"
+                    element={<FormUpdate />}
+                  />
+                </Routes>
+              </Suspense>
+            </Router>
           </AppContext>
-        </AppWrapper> 
-        </React.Fragment>
+        </AppWrapper>
+      </React.Fragment>
     );
 }
 

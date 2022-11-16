@@ -1,56 +1,16 @@
 import { createContext, useReducer, useCallback } from 'react'
-import useDataFetching from '../hooks/useDataFetching'
+import { reducerLists, initialState } from '../reducers/reducerLists'
+
 
 
 export const ListsContext = createContext()
 
 // 1 - definir un etat initial
-const initialState = {
-    lists: [],
-    list: {},
-    loading: false,
-    error: ''
-}
 
-// 2 - definir des actions
-// charger les listes ==> CHARGEMENT_LISTES ==> remplir tableau listes
-
-const reducer = (state, action) => {
-    switch (action.type) {
-        case 'GET_LISTS_SUCCESS':
-            return {
-                ...state,
-                lists: action.payload,
-                loading: true
-            };
-        case 'GET_LISTS_ERROR':
-            return {
-                ...state,
-                lists: [],
-                loading: false,
-                error: action.payload
-            };
-        case 'GET_LIST_SUCCESS':
-            return {
-                ...state,
-                list: action.payload,
-                loading: true
-            };
-        case 'GET_LIST_ERROR':
-            return {
-                ...state,
-                list: {},
-                loading: false,
-                error: action.payload
-            };
-        default:
-            return state
-    }
-}
 
 export const ListsContextProvider = ({ children }) => {
 
-    const [state, dispatch] = useReducer(reducer, initialState)
+    const [state, dispatch] = useReducer(reducerLists, initialState)
 
     const fetchLists = useCallback(
         async () => {

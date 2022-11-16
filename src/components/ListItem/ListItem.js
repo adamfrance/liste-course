@@ -1,4 +1,10 @@
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { ItemsContext } from "../../contexts/ItemsContext";
+import ButtonChange from "../Button/ButtonChange";
+import ButtonDelete from "../Button/ButtonDelete";
+
 
 // d'ou vient la data ?
 // comment l'envoyer a listitem
@@ -27,13 +33,18 @@ const Total = styled.span `
   text-align: right;
 `;
 
-const ListItem = ({ title, quantity, price }) => {
+const ListItem = ({ title, quantity, price, id, listId }) => {
+  const { deleteItem } = useContext(ItemsContext)
 
     return (
         <ListItemWrapper>
         <Title>{title}</Title>
         <Total>{quantity}</Total>
         <Total>{`$ ${price}`}</Total>
+        <Link to={`/list/${listId}/update/${id}/${title}/${quantity}/${price}`}>
+          <ButtonChange>Modifier</ButtonChange>
+        </Link>
+        <ButtonDelete onClick={deleteItem(id)}>Supprimer</ButtonDelete>
     </ListItemWrapper>
     )
 }
